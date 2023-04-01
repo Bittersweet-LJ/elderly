@@ -1,0 +1,194 @@
+basePath: /api/v1
+definitions:
+  controller._ResponseDhtList:
+    properties:
+      code:
+        description: 业务响应状态码
+        type: integer
+      data:
+        description: 数据
+        items:
+          $ref: '#/definitions/models.Dht'
+        type: array
+      msg:
+        description: 提示信息
+        type: string
+    type: object
+  controller._ResponseLedList:
+    properties:
+      code:
+        description: 业务响应状态码
+        type: integer
+      data:
+        description: 数据
+        items:
+          $ref: '#/definitions/models.Led'
+        type: array
+      msg:
+        description: 提示信息
+        type: string
+    type: object
+  controller._ResponseLoginList:
+    properties:
+      code:
+        description: 业务响应状态码
+        type: integer
+      data:
+        description: 数据
+        items:
+          $ref: '#/definitions/controller.ResLogin'
+        type: array
+      msg:
+        description: 提示信息
+        type: string
+    type: object
+  controller._ResponseSignUpList:
+    properties:
+      code:
+        description: 业务响应状态码
+        type: integer
+      msg:
+        description: 提示信息
+        type: string
+    type: object
+  controller.ResLogin:
+    properties:
+      token:
+        type: string
+      user_id:
+        type: integer
+      user_name:
+        type: string
+    type: object
+  models.Dht:
+    properties:
+      humidity:
+        type: integer
+      sense_time:
+        type: string
+      temperature:
+        type: integer
+    type: object
+  models.Led:
+    properties:
+      sense_time:
+        type: string
+      states:
+        type: string
+      vlight:
+        type: integer
+      vsmooth:
+        type: integer
+    type: object
+  models.ParamLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.ParamSignUp:
+    properties:
+      password:
+        type: string
+      re_password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - re_password
+    - username
+    type: object
+host: 8.130.39.242:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: liu
+    url: http://www.swagger.io/support
+  description: 老人智能陪伴系统
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 老人智能陪伴系统接口文档
+  version: "1.0"
+paths:
+  /dht22:
+    get:
+      consumes:
+      - application/json
+      description: 查询温湿度列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseDhtList'
+      summary: 查询温湿度列表信息接口
+      tags:
+      - 温湿度列表信息接口
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录接口
+      parameters:
+      - description: 登录参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.ParamLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseLoginList'
+      summary: 用户登录接口
+      tags:
+      - 用户登录接口
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册接口
+      parameters:
+      - description: 注册参数
+        in: body
+        name: object
+        required: true
+        schema:
+          $ref: '#/definitions/models.ParamSignUp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseSignUpList'
+      summary: 用户注册接口
+      tags:
+      - 用户注册接口
+  /smooth_led:
+    get:
+      consumes:
+      - application/json
+      description: 查询烟雾灯光列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponseLedList'
+      summary: 查询烟雾灯光列表信息接口
+      tags:
+      - 烟雾灯光列表信息接口
+swagger: "2.0"
